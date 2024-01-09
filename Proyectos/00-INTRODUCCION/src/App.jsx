@@ -1,35 +1,51 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// Imports
+import "./App.css";
+// import Contador from "./components/UseState/Contador";
+import ContadorDoble from "./components/UseState/ContadorDoble";
 
-function App() {
-  const [count, setCount] = useState(0)
+// Declaración variables globales
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+const App = () => {
+  // Hooks
 
-export default App
+  // Declaración variables locales
+
+  // const texto = "hola";
+  // const numero = 5;
+  // const array = ["pera", "manzana", "platano", "uva", "fresa"];
+  // const objeto = {
+  //   nombre: "Aarón",
+  //   edad: "44",
+  // };
+
+  // Funciones del componente
+
+    return (
+      <>
+        <ContadorDoble />
+      </>
+    )
+
+  // return (
+  //   <>
+  //     <h1>Ejemplo básico JSX</h1>
+  //     <h2>Variables y Objetos en JSX</h2>
+  //     <div>
+  //       <h3>La variable texto vale {texto}</h3>
+  //       <h3>La variable numero vale {numero}</h3>
+  //       <h3>
+  //         La variable array vale:
+  //           <ul>
+  //             {array.map((fruta, index) => (
+  //               <li key={index}>{fruta}</li>
+  //             ))}
+  //           </ul>
+  //       </h3>
+  //       <h3>El nombre del objeto es: {objeto.nombre}</h3>
+  //       <h3>La edad del objeto es: {objeto.edad}</h3>
+  //     </div>
+  //   </>
+  // );
+};
+
+export default App;
