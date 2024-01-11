@@ -1,7 +1,8 @@
 // Imports
 import "./App.css";
 // import Contador from "./components/UseState/Contador";
-import ContadorDoble from "./components/UseState/ContadorDoble";
+// import ContadorDoble from "./components/UseState/ContadorDoble";
+import DarkLightMode from "./components/UseState/DarkLightMode";
 
 // Declaración variables globales
 
@@ -22,7 +23,7 @@ const App = () => {
 
     return (
       <>
-        <ContadorDoble />
+        <DarkLightMode />
       </>
     )
 

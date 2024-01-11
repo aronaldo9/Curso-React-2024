@@ -1,7 +1,12 @@
-import useState  from 'react';
+import { useState } from 'react';
+import './DarkLightMode.css';
 
 const DarkLightMode = () => {
     const [darkMode, setDarkMode] = useState(false);
+
+    function toggleTheme() {
+      setDarkMode(!darkMode);
+    }
 
   return (
     <>
@@ -17,4 +22,4 @@ const DarkLightMode = () => {
   )
 }
 
-export default DarkLightMode
+export default DarkLightMode;
