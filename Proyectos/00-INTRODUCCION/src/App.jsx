@@ -1,8 +1,11 @@
 // Imports
-import "./App.css";
+
 // import Contador from "./components/UseState/Contador";
 // import ContadorDoble from "./components/UseState/ContadorDoble";
-import DarkLightMode from "./components/UseState/DarkLightMode";
+// import DarkLightMode from "./components/UseState/DarkLightMode";
+// import RegistrarFormulario from "./components/UseState/RegistrarFormulario";
+import RegistrarFormulario from "./components/UseState/RegistrarFormulario";
+import TodoList from "./components/UseState/TodoList";
 
 // Declaración variables globales
 
@@ -23,7 +26,10 @@ const App = () => {
 
     return (
       <>
-        <DarkLightMode />
+        <h1>Ejemplos básicos de React</h1>
+        <hr />
+        <RegistrarFormulario />
+        <TodoList />
       </>
     )
 
