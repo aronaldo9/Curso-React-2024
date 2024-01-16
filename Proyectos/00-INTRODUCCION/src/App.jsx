@@ -4,11 +4,15 @@
 // import ContadorDoble from "./components/UseState/ContadorDoble";
 // import DarkLightMode from "./components/UseState/DarkLightMode";
 // import RegistrarFormulario from "./components/UseState/RegistrarFormulario";
-import Bienvenido from "./components/UseState/Bienvenido";
-import BotonConEvento from "./components/UseState/BotonConEvento";
-import ElementoConEstilo from "./components/UseState/ElementoConEstilo";
-import Header from "./components/UseState/Header";
-import ListaNombres from "./components/UseState/ListaNombres";
+// import ComponenteProps from "./components/Props/ComponenteProps";
+import GitHubUsers from "./components/Props/UseEffect/GitHubUserCardApi/GitHubUsers";
+// import ResizeListener from "./components/Props/UseEffect/ResizeListener";
+// import UseEffectBasic from "./components/Props/UseEffect/UseEffectBasic";
+// import Bienvenido from "./components/UseState/Bienvenido";
+// import BotonConEvento from "./components/UseState/BotonConEvento";
+// import ElementoConEstilo from "./components/UseState/ElementoConEstilo";
+// import Header from "./components/UseState/Header";
+// import ListaNombres from "./components/UseState/ListaNombres";
 // import RegistrarFormulario from "./components/UseState/RegistrarFormulario";
 // import TodoList from "./components/UseState/TodoList";
 
@@ -33,11 +37,15 @@ const App = () => {
       <div>
           <h1>Ejemplos básicos de React</h1>
           <hr />
-          <Bienvenido />  {/*  Ejercicio 1 */}
-          <ListaNombres /> {/* Ejercicio 2 */}
-          <BotonConEvento /> {/* Ejercicio 3 */}
-          <Header /> {/* Ejercicio 4 */}
-          <ElementoConEstilo /> {/* Ejercicio 5 */}
+          {/* <Bienvenido />  {/*  Ejercicio 1 */}
+          {/* <ListaNombres /> Ejercicio 2 */}
+          {/* <BotonConEvento /> Ejercicio 3 */}
+          {/* <Header /> Ejercicio 4 */}
+          {/* <ElementoConEstilo /> Ejercicio 5 */}
+          {/* <ComponenteProps /> */}
+          {/* <UseEffectBasic /> */}
+          {/* <ResizeListener /> */}
+          <GitHubUsers />
       </div>
       
     </>
