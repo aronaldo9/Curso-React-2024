@@ -1,0 +1,10 @@
+ejercicio React pokeapi
+Se pretende crear una web en react que permita buscar y mostrar info de los pokemons usando el servicio pokeapi. para ello la web debe disponer
+de al menos los siguientes componentes:
+	-nav: q tenga a la izqda un logo y a la derecha el enlace a home y acerca de
+	-footer: q tenga nuestros datos y enlaces a rrss con los iconos correspondientes
+	-buscador: q permita buscar por pulsación de teclado la tarjeta del pokemon usando nuestro pokemons.json filtrando a tiempo real
+	-tarjeta: la imagen del pokemon, el nombre del pokemon, una media aritmética de las stats que tenga. 
+		al hacer click en la tarjeta abre otro componente con la info de ese pokemon.
+		Se programará en React para q cuando el ancho de pantalla sea menos de 400px las opciones del nav se convertirán en un menú hamburguesa
+	-acerca de: información nuestra

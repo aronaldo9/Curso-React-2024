@@ -1,11 +1,14 @@
 // Imports
 
+import Card from "./components/Props/ejercicios6-11/Card";
+// import ConditionalRender from "./components/Props/ejercicios6-11/ConditionalRender";
 // import Contador from "./components/UseState/Contador";
 // import ContadorDoble from "./components/UseState/ContadorDoble";
 // import DarkLightMode from "./components/UseState/DarkLightMode";
 // import RegistrarFormulario from "./components/UseState/RegistrarFormulario";
 // import ComponenteProps from "./components/Props/ComponenteProps";
-import GitHubUsers from "./components/Props/UseEffect/GitHubUserCardApi/GitHubUsers";
+// import GitHubUsers from "./components/Props/UseEffect/GitHubUserCardApi/GitHubUsers";
+// import CustomButton from "./components/Props/ejercicios6-11/CustomButton";
 // import ResizeListener from "./components/Props/UseEffect/ResizeListener";
 // import UseEffectBasic from "./components/Props/UseEffect/UseEffectBasic";
 // import Bienvenido from "./components/UseState/Bienvenido";
@@ -31,6 +34,10 @@ const App = () => {
   //   edad: "44",
   // };
 
+  // const handleButtonClick = () => {
+  //   alert('¡Botón clickeado!');
+  // }
+
   // Funciones del componente
   return(
     <>
@@ -45,7 +52,10 @@ const App = () => {
           {/* <ComponenteProps /> */}
           {/* <UseEffectBasic /> */}
           {/* <ResizeListener /> */}
-          <GitHubUsers />
+          {/* <GitHubUsers /> */}
+          {/* <CustomButton backgroundColor="green" text="Haz click" onClick={handleButtonClick} /> */}
+          {/* <ConditionalRender condition = {2+2===5}/> */}
+          <Card title="Éste es el título" body="Éste es el contenido" footer="Éste es el footer" />
       </div>
       
     </>
