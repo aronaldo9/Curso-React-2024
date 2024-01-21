@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import "./App.css";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 const URL = "https://pokeapi.co/api/v2/pokemon?limit=100";
 
@@ -41,7 +43,11 @@ const App = () => {
   
 
     return (
-      <h1>PokeApi</h1>
+        <>
+            <Navbar />
+            <Footer />
+        </>
+      
     )
 }
 
