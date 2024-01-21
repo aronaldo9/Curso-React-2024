@@ -1,6 +1,9 @@
 // Imports
 
-import Card from "./components/Props/ejercicios6-11/Card";
+// import Card from "./components/Props/ejercicios6-11/Card";
+import ConditionalRenderAdvanced from "./components/Props/ejercicios6-11/ConditionalRenderAdvanced";
+import ToggleVisibility from "./components/Props/ejercicios6-11/ToggleVisibility";
+import UserList from "./components/Props/ejercicios6-11/UserList";
 // import ConditionalRender from "./components/Props/ejercicios6-11/ConditionalRender";
 // import Contador from "./components/UseState/Contador";
 // import ContadorDoble from "./components/UseState/ContadorDoble";
@@ -38,6 +41,8 @@ const App = () => {
   //   alert('¡Botón clickeado!');
   // }
 
+  const userList = ["Aarón", "Bárbara", "Leo"];
+
   // Funciones del componente
   return(
     <>
@@ -55,7 +60,10 @@ const App = () => {
           {/* <GitHubUsers /> */}
           {/* <CustomButton backgroundColor="green" text="Haz click" onClick={handleButtonClick} /> */}
           {/* <ConditionalRender condition = {2+2===5}/> */}
-          <Card title="Éste es el título" body="Éste es el contenido" footer="Éste es el footer" />
+          {/* <Card title="Éste es el título" body="Éste es el contenido" footer="Éste es el footer" /> */}
+          <ToggleVisibility />
+          <UserList users={userList} />
+          <ConditionalRenderAdvanced />
       </div>
       
     </>
