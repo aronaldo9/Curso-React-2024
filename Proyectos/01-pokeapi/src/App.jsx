@@ -1,54 +1,114 @@
-import { useEffect } from "react";
-import "./App.css";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import { useState, useEffect } from 'react';
+import PokemonCard from './components/PokemonCard';
+import Spinner from './components/Spinner';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import SearchBar from './components/SearchBar';
+import PokemonModal from './components/PokemonModal';
 
-const URL = "https://pokeapi.co/api/v2/pokemon?limit=100";
+const URL = import.meta.env.VITE_URL_POKEAPI;
 
-const App = () => {
+function App() {
+  const [pokemons, setPokemons] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedPokemon, setSelectedPokemon] = useState(null);
+
+  function handleDelete(id) {
+    const updatePokemons = pokemons.filter((pokemon) => pokemon.id !== id);
+    setPokemons(updatePokemons);
+  }
+
+  const handleOpenModal = (pokemon) => {
+    setSelectedPokemon(pokemon);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedPokemon(null);
+  };
+
   useEffect(() => {
-      // Acceso a la Api de pokeapi
-      // creo la función o la importo de un helper y después ejecuto la función
-      const fetchData = async () => {
-          try {
-              const response = await fetch(URL);
-              if(!response.ok) {
-                  throw new Error
-              }
-              const data = await response.json();
-              const results = data.results;
-              const pokemonData = await Promise.all(
-                  results.map(async (pokemon, index) => {
-                      const resp = await fetch(pokemon.url);
-                      const pokemonDetails = await resp.json();
-                      return {
-                          id: pokemonDetails.id,
-                          name: pokemonDetails.name,
-                          image: pokemonDetails.sprites.other.dream_world.front_default || "",
-                          stats: pokemonDetails.stats.reduce((acc, stat) => acc + stat.base_stat, 0) / pokemonDetails.stats.length, // sacar media aritmética
-                          // (0-33 ---> 1, 34-66 ---> 2, 67-100 ---> 3; cada rango un color de tarjeta)
-                      };
-                  })
-              )
-              // setear pokemonData en un estado que guarde los pokemons
-              // setLoading(false)
-          } catch (error) {
-              throw new Error(error);
-          }
-      }
-  
-      // Ejecuto la función
-      fetchData();
-  }, [])
-  
+    const fetchData = async () => {
+      try {
+        const response = await fetch(URL);
+        if (!response.ok) {
+          throw new Error('Error fetching data');
+        }
+        const data = await response.json();
+        const results = data.results;
+        const fetchedPokemonData = await Promise.all(
+          results.map(async (pokemon) => {
+            const resp = await fetch(pokemon.url);
+            const pokemonDetails = await resp.json();
 
-    return (
-        <>
-            <Navbar />
-            <Footer />
-        </>
-      
-    )
+            const stats = pokemonDetails.stats || [];
+            const avgStat =
+              stats.reduce((acc, stat) => acc + stat.base_stat, 0) / stats.length;
+            const truncatedAvgStat = avgStat.toFixed(2);
+
+            const colorClass =
+              avgStat <= 33
+                ? 'bg-red-200'
+                : avgStat <= 66
+                ? 'bg-yellow-200'
+                : 'bg-green-200';
+
+            return {
+              id: pokemonDetails.id,
+              name: pokemonDetails.name,
+              image:
+                pokemonDetails?.sprites.other.dream_world.front_default ||
+                pokemonDetails.sprites.front_default ||
+                '',
+              avgStat: truncatedAvgStat,
+              colorClass: colorClass,
+              types: pokemonDetails.types.map((type) => type.type.name),
+              moves: pokemonDetails.moves.slice(0, 5).map((move) => move.move.name),
+            };
+          })
+        );
+        setPokemons(fetchedPokemonData);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return (
+    <>
+      <Navbar />
+      <SearchBar />
+      <div className="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 justify-center cursor-pointer">
+        {loading ? (
+          <Spinner />
+        ) : (
+          pokemons.map((pokemon) => (
+            <div key={pokemon.id} className="hover:scale-110">
+              <PokemonCard
+                pokemon={pokemon}
+                handleDelete={handleDelete}
+                openModal={() => handleOpenModal(pokemon)}
+              />
+            </div>
+          ))
+        )}
+      </div>
+      <Footer />
+      {selectedPokemon && (
+        <PokemonModal
+          id={selectedPokemon.id}
+          name={selectedPokemon.name}
+          image={selectedPokemon.image}
+          stats={selectedPokemon.avgStat}
+          types={selectedPokemon.types}
+          moves={selectedPokemon.moves}
+          onClose={handleCloseModal}
+        />
+      )}
+    </>
+  );
 }
 
 export default App;
