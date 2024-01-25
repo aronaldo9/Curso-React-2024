@@ -12,6 +12,7 @@ function App() {
   const [pokemons, setPokemons] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedPokemon, setSelectedPokemon] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
   function handleDelete(id) {
     const updatePokemons = pokemons.filter((pokemon) => pokemon.id !== id);
@@ -26,6 +27,14 @@ function App() {
     setSelectedPokemon(null);
   };
 
+  const handleSearch = (term) => {
+    setSearchTerm(term);
+  };
+
+  const handleClearSearch = () => {
+    setSearchTerm('');
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -35,6 +44,7 @@ function App() {
         }
         const data = await response.json();
         const results = data.results;
+
         const fetchedPokemonData = await Promise.all(
           results.map(async (pokemon) => {
             const resp = await fetch(pokemon.url);
@@ -52,6 +62,11 @@ function App() {
                 ? 'bg-yellow-200'
                 : 'bg-green-200';
 
+            // Filtramos los resultados basados en el término de búsqueda
+            if (searchTerm && !pokemonDetails.name.includes(searchTerm)) {
+              return null;
+            }
+
             return {
               id: pokemonDetails.id,
               name: pokemonDetails.name,
@@ -66,7 +81,11 @@ function App() {
             };
           })
         );
-        setPokemons(fetchedPokemonData);
+
+        // Filtramos los resultados nulos (si hubo una búsqueda)
+        const filteredPokemonData = fetchedPokemonData.filter(Boolean);
+
+        setPokemons(filteredPokemonData);
         setLoading(false);
       } catch (error) {
         console.error(error);
@@ -74,12 +93,12 @@ function App() {
     };
 
     fetchData();
-  }, []);
+  }, [searchTerm]);
 
   return (
     <>
       <Navbar />
-      <SearchBar />
+      <SearchBar onSearch={handleSearch} onClear={handleClearSearch} />
       <div className="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 justify-center cursor-pointer">
         {loading ? (
           <Spinner />
@@ -98,12 +117,10 @@ function App() {
       <Footer />
       {selectedPokemon && (
         <PokemonModal
-          id={selectedPokemon.id}
           name={selectedPokemon.name}
-          image={selectedPokemon.image}
-          stats={selectedPokemon.avgStat}
           types={selectedPokemon.types}
           moves={selectedPokemon.moves}
+          image={selectedPokemon.image}
           onClose={handleCloseModal}
         />
       )}

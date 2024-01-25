@@ -1,15 +1,15 @@
 import { useState } from "react";
 
 const PokemonCard = (props) => {
-  const { pokemon, handleDelete } = props;
+  const { pokemon, handleDelete, openModal } = props;
   const [isDeleting, setIsDeleting] = useState(false);
 
-  function handleClickDelete() {
+  const handleClickDelete = () => {
     setIsDeleting(true);
     setTimeout(() => {
       handleDelete(pokemon.id);
     }, 500);
-  }
+  };
 
   return (
     <div
@@ -27,9 +27,19 @@ const PokemonCard = (props) => {
           <h2 className="text-xl font-bold">{pokemon.name}</h2>
           <p>Avg Stat: {pokemon.avgStat}</p>
         </div>
-        <div className="mx-auto mb-4">
+        <div className="mx-auto mb-4 flex flex-col">
+        <button
+            className={"bg-gray-500 text-white px-3 py-1 rounded-md mx-auto hover:bg-gray-900 focus:outline-none mb-2"}
+            onClick={(e) => {
+              e.stopPropagation(); // Evitar que el clic llegue al contenedor y abra el modal
+              openModal();
+            }}
+          >
+            + INFO
+          </button>
+          
           <button
-            className="bg-red-500 text-white px-3 py-1 rounded-md mx-auto hover:bg-red-900 focus:outline-none"
+            className={"bg-red-500 text-white px-3 py-1 rounded-md mx-auto hover:bg-red-900 focus:outline-none"}
             onClick={handleClickDelete}
           >
             Eliminar
