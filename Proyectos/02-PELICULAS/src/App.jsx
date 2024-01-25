@@ -1,20 +1,26 @@
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import HomePage from "./router-dom-ejemplos/HomePage";
-import Products from "./router-dom-ejemplos/Products";
-import RootLayout from "./router-dom-ejemplos/RootLayout";
-import ErrorPage from "./router-dom-ejemplos/ErrorPage";
-import ProductDetails from "./router-dom-ejemplos/ProductDetails";
+import RootMovieLAyout from "./pages/RootMovieLAyout";
+import ErrorMoviePage from "./pages/ErrorMoviePage";
+import Home from "./pages/Home";
+import MovieDetailsPage from "./pages/MovieDetailsPage";
+import AcercaDe from "./pages/AcercaDe";
+import Usuario from "./pages/Usuario";
 
 function App () {
     const router = createBrowserRouter([
-      {path:'/', element: <RootLayout />,
-        errorElement: <ErrorPage />,
+      {path:'/', element: <RootMovieLAyout />,
+        errorElement: <ErrorMoviePage />,
         children: [
-          {path:'/', element: <HomePage />},
-          {path:'/productos', element: <Products />},
-          {path:'/productos/:productId', element: <ProductDetails />},
+          {index:true, element: <Home />}, // es igual que poner {path:"", element: <HomePage />} pero con index es más elegante
+          // {path:'peliculas', element: <Products />},
+          {path:'peliculas/:movieId', element: <MovieDetailsPage />},
+          {path:"/usuario", element: <Usuario />},
        ],
       },
+      {
+        path:"/acerca_de", element: <AcercaDe />,
+        
+      }
     ]);
     return <RouterProvider router={router} />
 }

@@ -2,13 +2,13 @@
 import { useParams } from 'react-router-dom'
 
 const ProductDetails = () => {
-    const parametros = useParams();
+    const {productId} = useParams();
   return (
     <>
         <div>Estoy en Detalles</div>
-        <div>del producto : {parametros.productId}</div>
+        <div>del producto : {productId}</div>
     </>
   )
 }
 
-export default ProductDetails
+export default ProductDetails;

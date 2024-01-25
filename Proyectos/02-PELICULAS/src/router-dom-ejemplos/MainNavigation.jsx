@@ -6,10 +6,10 @@ const MainNavigation = () => {
         <nav>
             <ul className='flex flex-row text-center justify-around'>
                 <li>
-                    <Link to="/">Home</Link>
+                    <Link to="..">Home</Link>
                 </li>
                 <li>
-                <Link to="/productos">Productos</Link>
+                <Link to="productos">Productos</Link>
                 </li>
             </ul>
         </nav>
