@@ -5,7 +5,6 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import SearchBar from '../components/SearchBar';
 import PokemonModal from '../components/PokemonModal';
-import { Link } from 'react-router-dom'
 
 const URL = import.meta.env.VITE_URL_POKEAPI;
 
@@ -125,7 +124,6 @@ function Home() {
           onClose={handleCloseModal}
         />
       )}
-      <Link to="/">Volver a Home</Link>
     </>
   );
 }
