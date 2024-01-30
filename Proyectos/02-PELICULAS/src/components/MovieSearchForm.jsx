@@ -1,14 +1,14 @@
-import { useState } from "react";
 import useDataApi from "../hooks/useDataApi";
-import ErrorMoviePage from "../pages/ErrorMoviePage";
 
+import { useState } from "react";
+import MovieCard from "./MovieCard";
+import Spinner from "./Spinner";
+
+// const apiKey = import.meta.env.VITE_API_TOKEN;
 const MovieSearchForm = () => {
-  const apiKey = import.meta.env.VITE_API_TOKEN;
-  const apiEndpoint =
-    "https://api.themoviedb.org/3/discover/movie/?&language=es-es&sort_by=popularity.desc&api_key=" +
-    apiKey;
+  const apiEndPoint = `https://api.themoviedb.org/3/discover/movie?&language=es-es&sort_by=popularity.desc&api_key=8930572ca461d9b58d8f05f72d6f419a`;
+  const { data, loading, error } = useDataApi(apiEndPoint);
 
-  // const { data, loading, error } = useDataApi(apiEndpoint);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredMovies, setFilteredMovies] = useState([]);
 
@@ -17,24 +17,25 @@ const MovieSearchForm = () => {
     const searchTerm = e.target.value.toLowerCase();
     setSearchQuery(searchTerm);
 
-    if(searchTerm.trim() === ""){
-        // entonces guardo en el filtrado de peliculas el estado inicial. [];
-        setFilteredMovies([]);
+    if (searchTerm.trim() === "") {
+      // entonces guardo en el filtrado de películas el estado inicial. [];
+      setFilteredMovies([]); //
     } else {
-        const filteredResults = data?.results.filter(movie => movie.title.toLowerCase().includes(searchTerm));
-        setFilteredMovies(filteredResults || []);
+      const filteredResults = data?.results.filter((movie) =>
+        movie.title.toLowerCase().includes(searchTerm)
+      );
+      setFilteredMovies(filteredResults || []);
     }
   }
 
-  function handleDelete() {
+  function handleClearSearch() {
     setSearchQuery("");
     setFilteredMovies([]);
   }
-
   return (
     <div className="flex flex-col items-center justify-center my-4">
       <form
-        className="w-1/2 bg-gray-800 p-4 rounded-lg flex ites-center"
+        className="w-1/2 bg-gray-800 p-4 rounded-lg flex items-center"
         onSubmit={handleSearch}
       >
         <input
@@ -42,7 +43,7 @@ const MovieSearchForm = () => {
           value={searchQuery}
           onChange={handleSearch}
           placeholder="Buscar película"
-          className="w-full bg-gray-700 text-white rounded-md focus:outline-none p-2"
+          className="w-full py-2 px-4 bg-gray-700 text-white rounded-md focus:outline-none"
         />
         <button
           type="submit"
@@ -50,24 +51,23 @@ const MovieSearchForm = () => {
         >
           Buscar
         </button>
-        
+
         {searchQuery && (
-            <button
-                type="submit"
-                className="ml-2 bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-800 focus:outline-none"
-                onClick={handleDelete}
-            >
-                Borrar
-            </button>
-        )};
-        
+          <button
+            className="ml-2 bg-red-800 text-white py-2 px-4 rounded-md hover:bg-sky-700 focus:outline-none"
+            onClick={handleClearSearch}
+          >
+            Borrar
+          </button>
+        )}
       </form>
       <hr />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-10 w-5/6">
-            {loading && <Spinner />} 
-            {/* si hace esto de arriba, ya no hace lo siguiente...son sentencias de cortocircuito */}
-            {error && <ErrorMoviePage />}
-            {}
+        {loading && <Spinner />}
+        {error && <h1>Esto es un error</h1>}
+        {(searchQuery ? filteredMovies : data?.results || []).map((movie) => (
+          <MovieCard key={movie.id} movie={movie} />
+        ))}
       </div>
     </div>
   );

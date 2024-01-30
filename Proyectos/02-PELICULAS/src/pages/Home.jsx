@@ -2,9 +2,9 @@ import MovieSearchForm from "../components/MovieSearchForm"
 
 
 const Home = () => {
-  return (
-    <MovieSearchForm />
-  )
+    return (
+      <MovieSearchForm />
+    )
 }
 
-export default Home
+export default Home;

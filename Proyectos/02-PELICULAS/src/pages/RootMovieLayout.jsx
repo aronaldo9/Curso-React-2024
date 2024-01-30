@@ -1,18 +1,18 @@
-import { Outlet } from 'react-router-dom'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import { Outlet } from "react-router-dom";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
 
-const RootMovieLAyout = () => {
+const RootMovieLayout = () => {
   return (
     <>
-        <Header />
-        <main>
-            {/* Aquí van los hijos */}
-            <Outlet />
-        </main>
-        <Footer />
+      <Header />
+      <main>
+        {/* Aquí van los hijos */}
+        <Outlet />
+      </main>
+      <Footer />
     </>
-  )
-}
+  );
+};
 
-export default RootMovieLAyout
+export default RootMovieLayout;
