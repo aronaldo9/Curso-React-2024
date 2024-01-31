@@ -18,10 +18,30 @@ const TodoProvider = ({children}) => {
     const [tareas, setTareas] = useState(initialState);
 
     // de una tarea querré: a)crearTarea, b)completarTarea, c)eliminarTarea, d)contarTarea
-    function agregarTarea("texto") {
-        nuevaTarea = {id:}
-        setTareas([...tareas],nuevaTarea);
-    }
+    const crearTarea = (texto) => {
+        const nuevaTarea = {
+            id: tareas.length + 1,
+            texto: texto,
+            completada: false,
+        };
+        setTareas([...tareas, nuevaTarea]);
+    };
+
+    const completarTarea = (id) => {
+        const nuevasTareas = tareas.map((tarea) =>
+            tarea.id === id ? { ...tarea, completada: !tarea.completada } : tarea
+        );
+        setTareas(nuevasTareas);
+    };
+
+    const eliminarTarea = (id) => {
+        const nuevasTareas = tareas.filter((tarea) => tarea.id !== id);
+        setTareas(nuevasTareas);
+    };
+
+    const contarTareas = () => {
+        return tareas.length;
+    };
 
     return (
         <TodoContext.Provider value={tareas}>
