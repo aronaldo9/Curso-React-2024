@@ -18,13 +18,9 @@ const TodoProvider = ({children}) => {
     const [tareas, setTareas] = useState(initialState);
 
     // de una tarea querré: a)crearTarea, b)completarTarea, c)eliminarTarea, d)contarTarea
-    const crearTarea = (texto) => {
-        const nuevaTarea = {
-            id: tareas.length + 1,
-            texto: texto,
-            completada: false,
-        };
-        setTareas([...tareas, nuevaTarea]);
+    const crearTarea = () => {
+        const nuevaTarea = "";
+        return setTareas([...tareas, nuevaTarea]);
     };
 
     const completarTarea = (id) => {
@@ -40,7 +36,8 @@ const TodoProvider = ({children}) => {
     };
 
     const contarTareas = () => {
-        return tareas.length;
+        const tareasCompletadas = tareas.filter((tarea) => tarea.completada === false);
+        return tareasCompletadas.length;
     };
 
     return (
