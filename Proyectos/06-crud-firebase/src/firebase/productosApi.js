@@ -4,6 +4,7 @@ import {
     getAuth,
     setPersistence,
     signInWithPopup,
+    signOut,
   } from "firebase/auth";
   
   import {
@@ -11,7 +12,9 @@ import {
     collection,
     deleteDoc,
     doc,
+    getDoc,
     getDocs,
+    updateDoc,
   } from "firebase/firestore";
   import { db } from "./firebase";
   
@@ -36,10 +39,30 @@ import {
       const data = await getDocs(productosCollection);
       return data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
     } catch (error) {
-      console.log("Error al Obtener los productos", error);
+      console.log("Error al obtener los productos", error);
       throw error;
     }
   };
+
+  // -------- Cargar datos de un producto cuyo id es... -------------
+
+  export const getProductById = async (productId) => {
+    try {
+      const productDocRef = doc(productosCollection, productId);
+      const productDoc = await getDoc(productDocRef)
+      if(productDoc.exists()) {
+        return { ...productDoc.data(), id: productDoc.id}
+      }else {
+        console.error("El producto con id dado no existe");
+        return null;
+      }
+    } catch (error) {
+      console.log("Error al obtener el producto", error);
+      throw error;
+    }
+  }
+
+
   
   // --------------- Eliminar Productos ------------
   
@@ -50,11 +73,23 @@ import {
       // borrar el documento seleccionado
       await deleteDoc(productDocRef);
     } catch (error) {
-      console.error("Error deleting", error);
+      console.log("Error deleting", error);
       throw error;
     }
   };
-  
+
+  // ---------- Edit Product by Id -----------
+  export const editProduct = async (idProduct, newData) => {
+    try {
+      const productDocRef = doc(productosCollection, idProduct);
+      await updateDoc(productDocRef, newData);
+    } catch (error) {
+      console.log("Error updating product", error);
+      throw error;
+    }
+  }
+
+  // Iniciar sesión con google
   export const singWithGoogle = async (signInFirebase, setError, navigate) => {
     const auth = getAuth();
     const provider = new GoogleAuthProvider();
@@ -72,3 +107,15 @@ import {
       setError(`Error  al iniciar sesión: ${error}`);
     }
   };
+
+  // Cerrar sesión
+  export const cerrarSesion = async () => {
+    const auth = getAuth();
+    try {
+      await signOut(auth);
+      return true;
+    } catch (error) {
+      console.log("Error al cerrar sesión", error);
+      return false;
+    }
+  }

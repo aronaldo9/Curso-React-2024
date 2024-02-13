@@ -4,14 +4,14 @@ import { createContext, useContext, useState } from "react";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [userFirebase, setUser] = useState(null);
+  const [userFirebase, setUserFirebase] = useState(null);
 
   const signInFirebase = (userData) => {
-    setUser(userData);
+    setUserFirebase(userData);
   };
 
   const signOutFirebase = () => {
-    setUser(null);
+    setUserFirebase(null);
   };
 
   return (
@@ -24,6 +24,6 @@ export const AuthProvider = ({ children }) => {
 };
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const useAuthProducts = () => {
+export const useAuthProduct = () => {
   return useContext(AuthContext);
 };

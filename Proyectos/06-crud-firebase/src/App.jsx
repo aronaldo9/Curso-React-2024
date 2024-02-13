@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ProtectedRoute from "./components/utils/ProtectedRoute";
-import { ProductosProvider } from "./context/Otra_forma_contexto/ProductosProvider";
+// import { ProductosProvider } from "./context/Otra_forma_contexto/ProductosProvider";
 // import { AuthProvider } from "./context/useAuthProducts";
 import EditProductPage from "./pages/EditProductPage";
 import ErrorPage from "./pages/ErrorPage";
@@ -8,6 +8,7 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import PaymentPage from "./pages/PaymentPage";
 import RootPage from "./pages/RootPage";
+import { AuthProvider } from "./context/authContextProduct";
 
 function App() {
   const router = createBrowserRouter([
@@ -17,7 +18,7 @@ function App() {
       errorElement: <ErrorPage />,
       children: [
         {
-          element: <ProtectedRoute isActive={true} redirectPath="/login" />,
+          element: <ProtectedRoute redirectPath="/login" />,
           children: [
             {
               index: true,
@@ -39,10 +40,9 @@ function App() {
     // </AuthProvider>
 
     // ------------- Usando el provider del contexto de Otra_forma_contexto ---------------
-    <ProductosProvider>
+    <AuthProvider>
       <RouterProvider router={router} />
-      );
-    </ProductosProvider>
+    </AuthProvider>
   );
 }
 
