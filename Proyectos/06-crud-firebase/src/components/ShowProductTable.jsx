@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { deleteProducto, getProductos } from "../firebase/productosApi";
 import Spinner from "./Spinner";
@@ -7,6 +7,10 @@ import Spinner from "./Spinner";
 const ShowProductTable = ({ actualizarProductos }) => {
   const [loading, setLoading] = useState(false);
   const [productos, setProductos] = useState([]);
+  const [stockTotal, setStockTotal] = useState(0);
+  const [orden, setOrden] = useState("asc");
+  const navigate = useNavigate();
+
   const handleDelete = async (id) => {
     try {
       const response = await Swal.fire({
@@ -32,16 +36,29 @@ const ShowProductTable = ({ actualizarProductos }) => {
     }
   };
 
+  const handleClickPayment = () => {
+    navigate("/payment", { state: {stockTotal}})
+  }
+
+  const handleOrderToggleByStock = () => {
+    const sortedProductos = orden === "asc" ? [...productos.sort((a, b) => b.stock - a.stock)] : [...productos.sort((a, b) => a.stock - b.stock)];
+    setProductos(sortedProductos);
+    setOrden(orden === "asc" ? "desc" : "asc");
+  };
+  
+
   const fetchDataProducts = async () => {
     try {
       const productosData = await getProductos();
       setProductos(productosData);
+      setStockTotal(productosData.reduce ( (acum, producto) => (acum+=parseInt(producto.stock)),0 ))
     } catch (error) {
       console.log("Error fetching productos", error);
     } finally {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchDataProducts();
   }, [actualizarProductos]);
@@ -57,7 +74,7 @@ const ShowProductTable = ({ actualizarProductos }) => {
               <tr>
                 <th className="py-2 px-4 border-b">ID</th>
                 <th className="py-2 px-4 border-b">Nombre Producto</th>
-                <th className="py-2 px-4 border-b">Stock</th>
+                <th className="py-2 px-4 border-b hover:bg-red-600 cursor-pointer" onClick={handleOrderToggleByStock}>Stock</th>
                 <th className="py-2 px-4 border-b">Descripcion</th>
                 <th className="py-2 px-4 border-b">Imagen</th>
                 <th className="py-2 px-4 border-b">Acciones</th>
@@ -95,6 +112,19 @@ const ShowProductTable = ({ actualizarProductos }) => {
               ))}
             </tbody>
           </table>
+          <div className="bg-gray-400 p-4 mt-4 border-t flex justify-between items-center">
+            <span className="text-lg font-semibold">
+              Total stock
+            </span>
+            <span className="text-lg">
+              {stockTotal}
+            </span>
+            <button 
+              onClick={handleClickPayment}
+              className="bg-blue-500 hover:bg-blue-800 text-white font-bold py-1 px-3 rounded ">
+              Pagar
+            </button>
+          </div>
         </>
       )}
     </div>

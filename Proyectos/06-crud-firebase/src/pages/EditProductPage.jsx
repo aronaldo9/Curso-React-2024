@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import EditProductForm from "../components/EditProductForm"
 import { useEffect, useState } from "react";
 import { getProductById } from "../firebase/productosApi";
+import Spinner from "../components/Spinner";
 
 
 const EditProductPage = () => {
@@ -30,7 +31,7 @@ const EditProductPage = () => {
     }, [])
     
     if(producto === null) {
-      return <div>Cargando...</div>
+      return <Spinner />;
     }
 
     return (
